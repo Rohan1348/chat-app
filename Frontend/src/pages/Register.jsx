@@ -27,7 +27,7 @@ export default function Register() {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
   // This useEffect hook checks whether a specific item exists in the browser's local storage,
   // and if it does, it uses the navigate function to redirect the user to the root URL ("/").
   // In this case, useEffect runs once when the component mounts, as indicated by the empty dependency array ([]).
