@@ -78,3 +78,29 @@ io.on("connection", (socket) => {
 // The connection event is triggered when a new socket connection is established.
 // The add-user event is handled to add a user to the onlineUsers map.
 // The send-msg event is handled to send a message to a specific user using their socket ID.
+
+
+
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+
+app.post("/generate-reply", (req, res) => {
+  const {query} = req.body
+  async function run() {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+  
+    let prompt = ""
+    if (query !== ""){
+      prompt = query + "Answer but not in more than 100 words"
+    }
+  
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    res.send(text)
+  }
+  
+  run();
+})
